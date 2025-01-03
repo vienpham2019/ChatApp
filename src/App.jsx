@@ -7,21 +7,25 @@ import ProfilePage from "./pages/ProfilePage";
 import PersistLogin from "./auths/PersistLogin";
 import MainLayout from "./layout/mainLayout";
 import AuthLayout from "./layout/authLayout";
+import { Toaster } from "react-hot-toast";
 const App = () => {
   return (
-    <Routes>
-      <Route element={<PersistLogin />}>
-        <Route element={<MainLayout />}>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/profile" element={<ProfilePage />} />
+    <div>
+      <Routes>
+        <Route element={<PersistLogin />}>
+          <Route element={<MainLayout />}>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/profile" element={<ProfilePage />} />
+          </Route>
         </Route>
-      </Route>
-      <Route element={<AuthLayout />}>
-        <Route path="/signup" element={<SignUpPage />} />
-        <Route path="/login" element={<LoginPage />} />
-      </Route>
-      <Route path="/setting" element={<SettingPage />} />
-    </Routes>
+        <Route element={<AuthLayout />}>
+          <Route path="/signup" element={<SignUpPage />} />
+          <Route path="/login" element={<LoginPage />} />
+        </Route>
+        <Route path="/setting" element={<SettingPage />} />
+      </Routes>
+      <Toaster position="bottom-right" reverseOrder={false} />
+    </div>
   );
 };
 
