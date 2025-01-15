@@ -1,11 +1,13 @@
 import { Outlet } from "react-router-dom";
 import authImage from "../img/Auth.png";
-import Logo from "../components/Logo";
+import Navbar from "../components/Navbar";
 const AuthLayout = () => {
   return (
     <div className="font-[sans-serif] bg-gray-900 md:h-screen">
       <div className="grid md:grid-cols-2 items-center gap-8 h-full relative">
-        <Logo className={"absolute w-[10rem] -top-[2rem] m-0"} />
+        <div className="absolute w-full top-0">
+          <Navbar />
+        </div>
         <div className="max-md:order-1 p-4">
           <img
             src={authImage}

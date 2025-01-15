@@ -15,6 +15,23 @@ const errorToast = ({
     }
   );
 };
+
+const waringToast = ({
+  title,
+  message,
+  duration = 5000,
+  style = { color: "black", fontFamily: "Sans-serif", fontSize: "14px" },
+}) => {
+  toast(
+    <span style={style}>
+      <strong>{title}:</strong> {message}
+    </span>,
+    {
+      duration, // Optional: Adjust the toast display duration
+    }
+  );
+};
+
 const successToast = ({
   title,
   message,
@@ -31,4 +48,4 @@ const successToast = ({
   );
 };
 
-export { errorToast, successToast };
+export { errorToast, successToast, waringToast };

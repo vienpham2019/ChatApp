@@ -4,6 +4,7 @@ import SignUpPage from "./pages/SignUpPage";
 import LoginPage from "./pages/LoginPage";
 import SettingPage from "./pages/SettingPage";
 import ProfilePage from "./pages/ProfilePage";
+import NotFound from "./pages/NotFound";
 import PersistLogin from "./auths/PersistLogin";
 import MainLayout from "./layout/mainLayout";
 import AuthLayout from "./layout/authLayout";
@@ -23,6 +24,7 @@ const App = () => {
           <Route path="/login" element={<LoginPage />} />
         </Route>
         <Route path="/setting" element={<SettingPage />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
       <Toaster position="bottom-right" reverseOrder={false} />
     </div>

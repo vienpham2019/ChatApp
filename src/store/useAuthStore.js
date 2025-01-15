@@ -1,46 +1,64 @@
 import { create } from "zustand";
 import { axiosInstance } from "../lib/axios";
-import { errorToast, successToast } from "../util/constomToast";
+import { errorToast, successToast, waringToast } from "../util/constomToast";
+
+const initActionState = {
+  isLoading: false,
+  isError: false,
+  isSuccess: false,
+  errorMessage: "",
+};
 
 export const useAuthStore = create((set) => ({
   token: null,
-  verifyRefreshTokenLoading: false,
-  isSignUpLoading: false,
-  isLoginLoading: false,
+  ...initActionState,
+
   verifyRefreshToken: async () => {
     try {
-      set({ verifyRefreshTokenLoading: true });
       const res = await axiosInstance.get("/auth/refresh");
-      console.log(res);
-      set({ token: res.metadata });
+      set({ token: res.data.metadata });
     } catch (error) {
       console.log(error);
-      set({ token: null });
-    } finally {
-      set({ verifyRefreshTokenLoading: false });
+      throw new Error(error.response?.data?.message);
     }
   },
-  login: async () => {
+
+  logIn: async ({ payload, navigate }) => {
     try {
-      set({ isLoginLoading: true });
-      const res = await axiosInstance.post("/auth/logIn");
-      set({ token: res.metadata });
+      const res = await axiosInstance.post("/auth/logIn", payload);
+      set({
+        token: res.data.metadata,
+      });
+      successToast({ title: "LogIn", message: res.data.message });
+      navigate("/");
     } catch (error) {
-      set({ token: null });
-    } finally {
-      set({ isLoginLoading: false });
+      errorToast({ title: "Login", message: error.response?.data?.message });
+      throw new Error(error.response?.data?.message);
     }
   },
+
   signUp: async ({ payload, navigate }) => {
     try {
-      set({ isSignUpLoading: true });
       const res = await axiosInstance.post("/auth/signUp", payload);
       successToast({ title: "SignUp", message: res.data.message });
       navigate("/login");
     } catch (error) {
-      errorToast({ title: "SignUp", message: error.response.data.message });
-    } finally {
-      set({ isSignUpLoading: false });
+      errorToast({ title: "SignUp", message: error.response?.data?.message });
+      throw new Error(error.response?.data?.message);
+    }
+  },
+
+  logOut: async ({ navigate }) => {
+    try {
+      await axiosInstance.get("/auth/logOut");
+      set({
+        token: null,
+      });
+      successToast({ title: "LogOut", message: "LogOut Success" });
+      navigate("/login");
+    } catch (error) {
+      errorToast({ title: "LogOut", message: error.response?.data?.message });
+      throw new Error(error.response?.data?.message);
     }
   },
 }));

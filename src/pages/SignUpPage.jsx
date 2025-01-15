@@ -11,7 +11,10 @@ import { Link, useNavigate } from "react-router-dom";
 
 const SignUpPage = () => {
   const navigate = useNavigate();
-  const { signUp, isSignUpLoading } = useAuthStore();
+  const {
+    signUp,
+    isLoading
+  } = useAuthStore();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [formData, setFormData] = useState({
@@ -95,7 +98,7 @@ const SignUpPage = () => {
     return isValid ? "text-gray-800" : "text-red-500";
   };
 
-  if (isSignUpLoading) {
+  if (isLoading) {
     return (
       <div className="flex flex-col gap-[1rem] max-w-lg w-full mx-auto">
         <div className="mb-12">
@@ -260,7 +263,7 @@ const SignUpPage = () => {
         <div className="mt-12">
           <button
             type="submit"
-            disabled={isSignUpLoading}
+            disabled={isLoading}
             className="w-full py-3 px-6 text-sm tracking-wider font-semibold rounded-md bg-blue-600 hover:bg-blue-700 text-white focus:outline-none"
           >
             Creat an account
